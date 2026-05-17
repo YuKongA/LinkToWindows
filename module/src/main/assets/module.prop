@@ -1,0 +1,6 @@
+id=LinkToWindows
+name=Link To Windows
+version=%%VERSION%%
+versionCode=%%VERSIONCODE%%
+author=YuKongA
+description=Sideloads LinkToWindows APKs and uses Zygisk to flip ltwEnabled()

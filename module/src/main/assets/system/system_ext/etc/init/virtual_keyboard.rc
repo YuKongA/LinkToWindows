@@ -1,0 +1,8 @@
+service vendor.virtual_keyboard /system_ext/bin/virtual_keyboard
+    interface aidl vendor.virtual_keyboard
+    class late_start
+    user system
+    group uhid
+    writepid /dev/cpuset/system/tasks
+    oneshot
+    disabled # does not start with the core class

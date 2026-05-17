@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<permissions>
+    <privapp-permissions package="com.microsoft.appmanager">
+        <permission name="android.permission.REQUEST_COMPANION_PROFILE_COMPUTER" />
+        <permission name="android.permission.REQUEST_COMPANION_SELF_MANAGED" />
+    </privapp-permissions>
+
+    <allow-in-power-save package="com.microsoft.appmanager" />
+</permissions>

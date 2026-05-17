@@ -1,0 +1,48 @@
+# --- cross_device_service ---
+type cross_device_service { service_manager_type system_server_service app_api_service ephemeral_app_api_service }
+
+# --- virtual_keyboard ---
+type virtual_keyboard { domain coredomain binderservicedomain }
+type virtual_keyboard_exec { file_type exec_type system_file_type }
+type virtual_keyboard_service service_manager_type
+allow virtual_keyboard virtual_keyboard process { fork sigchld signal getsched setsched getpgid setpgid setcap setrlimit getattr getrlimit }
+allow virtual_keyboard virtual_keyboard dir { search read open getattr }
+allow virtual_keyboard virtual_keyboard file { read write open getattr ioctl lock map }
+allow virtual_keyboard virtual_keyboard lnk_file { read getattr }
+allow virtual_keyboard virtual_keyboard unix_dgram_socket { create connect write read getattr setopt }
+allow virtual_keyboard virtual_keyboard binder { call transfer }
+allow virtual_keyboard system_prop file { read open getattr map }
+allow virtual_keyboard default_prop file { read open getattr map }
+allow virtual_keyboard servicemanager_prop file { read open getattr map }
+allow virtual_keyboard binder_device chr_file { open read write ioctl map }
+
+# --- init ---
+type_transition init virtual_keyboard_exec process virtual_keyboard
+allow init virtual_keyboard_exec file { read getattr map execute open }
+allow init virtual_keyboard process { transition siginh rlimitinh }
+allow init system_file file relabelfrom
+allow init virtual_keyboard_exec file relabelto
+allow virtual_keyboard virtual_keyboard_exec file { read getattr map execute open entrypoint }
+dontaudit init virtual_keyboard process noatsecure
+allow virtual_keyboard_exec labeledfs filesystem associate
+
+# --- servicemanager ---
+allow virtual_keyboard servicemanager binder { call transfer }
+allow servicemanager virtual_keyboard binder { call transfer }
+allow servicemanager virtual_keyboard process getattr
+allow virtual_keyboard virtual_keyboard_service service_manager { add find }
+
+# --- Apps look up the services ---
+allow platform_app virtual_keyboard_service service_manager find
+allow priv_app virtual_keyboard_service service_manager find
+allow system_server cross_device_service service_manager { add find }
+allow platform_app cross_device_service service_manager find
+allow priv_app cross_device_service service_manager find
+
+# --- Daemon function ---
+allow system_server virtual_keyboard binder transfer
+allow virtual_keyboard system_server binder { call transfer }
+allow virtual_keyboard system_server fd use
+allow virtual_keyboard permission_service service_manager find
+allow virtual_keyboard package_native_service service_manager find
+allow virtual_keyboard uhid_device chr_file { ioctl write lock append map open }
