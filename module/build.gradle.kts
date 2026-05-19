@@ -5,13 +5,13 @@ plugins {
     id("com.android.application")
 }
 
-val verCode = 10
-val verName = "v1.0"
+val verCode = 11
+val verName = "v1.1"
 val pkgName = "top.yukonga.linkToWindows"
 val moduleId = "LinkToWindows"
 val androidBuildToolsVer = "37.0.0"
 
-val androidSdkDir: java.io.File = run {
+val androidSdkDir = run {
     val localProps = rootProject.file("local.properties")
     val fromProps = if (localProps.exists()) {
         Properties()
@@ -68,10 +68,10 @@ android {
 // the JNI build #includes, so the dex bytes ride inside the .so.
 // ---------------------------------------------------------------------------
 
-val helperSrcDir       = layout.projectDirectory.dir("helper")
-val helperClassesDir   = layout.buildDirectory.dir("helper/classes")
-val helperDexDir       = layout.buildDirectory.dir("helper/dex")
-val helperHeaderFile   = layout.buildDirectory.file("generated/jni/fetcher_dex.h")
+val helperSrcDir = layout.projectDirectory.dir("helper")
+val helperClassesDir = layout.buildDirectory.dir("helper/classes")
+val helperDexDir = layout.buildDirectory.dir("helper/dex")
+val helperHeaderFile = layout.buildDirectory.file("generated/jni/fetcher_dex.h")
 
 val compileFetcherHelper = tasks.register<JavaCompile>("compileFetcherHelper") {
     source = fileTree(helperSrcDir) { include("**/*.java") }
