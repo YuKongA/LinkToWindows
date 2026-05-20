@@ -5,8 +5,8 @@ plugins {
     id("com.android.application")
 }
 
-val verCode = 11
-val verName = "v1.1"
+val verCode = 12
+val verName = "v1.2"
 val pkgName = "top.yukonga.linkToWindows"
 val moduleId = "LinkToWindows"
 val androidBuildToolsVer = "37.0.0"

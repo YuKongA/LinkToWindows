@@ -28,10 +28,19 @@ if [ ! -f /system_ext/etc/selinux/system_ext_service_contexts ]; then
   abort "-----------------------------------------------------------"
 fi
 
+ui_print "- Patching system_ext_service_contexts…"
+mkdir -p $MODPATH/system/system_ext/etc/selinux
+cp -af /system_ext/etc/selinux/system_ext_service_contexts $MODPATH/system/system_ext/etc/selinux/
+
+grep -q "^cross_device_service[[:space:]]" $MODPATH/system/system_ext/etc/selinux/system_ext_service_contexts || \
+    echo "cross_device_service u:object_r:cross_device_service:s0" >> $MODPATH/system/system_ext/etc/selinux/system_ext_service_contexts
+
+grep -q "^vendor.virtual_keyboard[[:space:]]" $MODPATH/system/system_ext/etc/selinux/system_ext_service_contexts || \
+    echo "vendor.virtual_keyboard u:object_r:virtual_keyboard_service:s0" >> $MODPATH/system/system_ext/etc/selinux/system_ext_service_contexts
+
 ui_print "- Setting permissions…"
 set_perm_recursive $MODPATH 0 0 0755 0644
 set_perm_recursive $MODPATH/system/system_ext/bin 0 2000 0751 0755
-chmod u+x $MODPATH/uninstall.sh
 
 ui_print "- Installing apps…"
 for entry in \
