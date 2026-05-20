@@ -1,6 +1,8 @@
 #!/system/bin/sh
 MODDIR=${0%/*}
 
+[ "$KSU" != "true" ] && [ "$APATCH" != "true" ] && [ -f "$MODDIR/sepolicy.rule" ] && magiskpolicy --live --apply "$MODDIR/sepolicy.rule"
+
 cp -af $MODDIR/injectrc /data/local/tmp
 cd /data/local/tmp
 chmod +x ./injectrc
