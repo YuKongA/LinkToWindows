@@ -5,8 +5,8 @@ plugins {
     id("com.android.application")
 }
 
-val verCode = 12
-val verName = "v1.2"
+val verCode = 13
+val verName = "v1.3"
 val pkgName = "top.yukonga.linkToWindows"
 val moduleId = "LinkToWindows"
 val androidBuildToolsVer = "37.0.0"
@@ -74,6 +74,7 @@ val helperDexDir = layout.buildDirectory.dir("helper/dex")
 val helperHeaderFile = layout.buildDirectory.file("generated/jni/fetcher_dex.h")
 
 val compileFetcherHelper = tasks.register<JavaCompile>("compileFetcherHelper") {
+    description = "compileFetcherHelper"
     source = fileTree(helperSrcDir) { include("**/*.java") }
     classpath = files()
     destinationDirectory.set(helperClassesDir)
@@ -83,6 +84,7 @@ val compileFetcherHelper = tasks.register<JavaCompile>("compileFetcherHelper") {
 }
 
 val dexFetcherHelper = tasks.register<JavaExec>("dexFetcherHelper") {
+    description = "dexFetcherHelper"
     dependsOn(compileFetcherHelper)
     val d8Jar = file("$androidSdkDir/build-tools/$androidBuildToolsVer/lib/d8.jar")
     inputs.dir(helperClassesDir)
@@ -110,6 +112,7 @@ val dexFetcherHelper = tasks.register<JavaExec>("dexFetcherHelper") {
 }
 
 val generateFetcherHeader = tasks.register("generateFetcherHeader") {
+    description = "generateFetcherHeader"
     dependsOn(dexFetcherHelper)
     val dexFile = helperDexDir.map { it.file("classes.dex") }
     inputs.file(dexFile)
@@ -142,6 +145,7 @@ afterEvaluate {
 
 tasks.register<Zip>("assembleModule") {
     group = "module"
+    description = "assembleModule"
 
     val apkFile = layout.buildDirectory.file("outputs/apk/release/module-release-unsigned.apk")
     val apkTree = zipTree(apkFile.get().asFile)

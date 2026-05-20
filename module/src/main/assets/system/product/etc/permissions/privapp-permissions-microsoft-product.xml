@@ -2,10 +2,13 @@
 <permissions>
    <privapp-permissions package="com.microsoft.appmanager">
       <permission name="android.permission.READ_PHONE_STATE" />
+      <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
       <permission name="android.permission.READ_WALLPAPER_INTERNAL" />
       <permission name="android.permission.CAPTURE_AUDIO_OUTPUT" />
       <permission name="android.permission.CAPTURE_MEDIA_OUTPUT" />
       <permission name="android.permission.MODIFY_AUDIO_ROUTING" />
+      <permission name="android.permission.LOCAL_MAC_ADDRESS" />
+      <permission name="android.permission.MANAGE_WIFI_NETWORK_SELECTION" />
    </privapp-permissions>
    <privapp-permissions package="com.microsoft.deviceintegrationservice">
       <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
